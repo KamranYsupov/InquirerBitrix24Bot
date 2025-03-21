@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "web_bot"
+version = "0.1.0"
+description = ""
+authors = ["Kamran <kamrankek48@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "4.2.1"
+loguru = "^0.7.2"
+python-dotenv = "^1.0.1"
+pydantic = "^2.9.2"
+gunicorn = "^23.0.0"
+psycopg2-binary = "^2.9.10"
+django-extensions = "^3.2.3"
+python-ulid = "^3.0.0"
+pyrogram = "^2.0.106"
+requests = "^2.32.3"
+bcrypt = "^4.3.0"
+uvicorn = "^0.34.0"
+tgcrypto = "^1.2.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
