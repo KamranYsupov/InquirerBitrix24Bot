@@ -1,5 +1,3 @@
-from pprint import pprint
-
 import bcrypt
 
 from web.apps.bitrix24.models import Deal
@@ -9,7 +7,7 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 
-from bot.main import user_bot
+from bot import user_bot
 from web.services.telegram import telegram_service
 
 
@@ -44,7 +42,6 @@ def bitrix_webhook(request):
             'Сделка уже обработана',
             status=400
         )
-
 
 
     telegram_username = deal_data.get(settings.BITRIX24_TELEGRAM_USERNAME_FIELD_NAME)

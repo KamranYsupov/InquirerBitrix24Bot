@@ -20,7 +20,8 @@ user_bot = Client(
     api_id=settings.TELEGRAM_API_ID,
     api_hash=settings.TELEGRAM_API_HASH,
     phone_number=settings.USERBOT_PHONE,
-    parse_mode=ParseMode.HTML
+    parse_mode=ParseMode.HTML,
+    workdir='/bot/sessions/'
 )
 
 from web.services.telegram import telegram_service
@@ -60,7 +61,6 @@ def handle_callback_query(client: Client, message: types.Message):
         chat_id=message.from_user.id,
         text='Спасибо за вашу оценку!',
     )
-    #client.stop()
 
     telegram_service.send_message(
         chat_id=settings.MANAGERS_GROUP_ID,
