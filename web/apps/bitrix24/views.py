@@ -7,7 +7,7 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 
-from bot import user_bot
+from web.bot import user_bot
 from web.services.telegram import telegram_service
 
 

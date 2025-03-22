@@ -1,10 +1,8 @@
-import asyncio
 import os
 
 import django
 import loguru
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 from dotenv import load_dotenv
 from pyrogram import Client
 from pyrogram.enums import ParseMode
@@ -21,14 +19,13 @@ user_bot = Client(
     api_hash=settings.TELEGRAM_API_HASH,
     phone_number=settings.USERBOT_PHONE,
     parse_mode=ParseMode.HTML,
-    workdir='/bot/sessions/'
 )
 
 from web.services.telegram import telegram_service
 from web.apps.bitrix24.models import Deal
 
 @user_bot.on_message()
-def handle_callback_query(client: Client, message: types.Message):
+def handel_deal(client: Client, message: types.Message):
     deal = Deal.objects.filter(telegram_username=message.from_user.username)
     if not deal.exists():
         return
