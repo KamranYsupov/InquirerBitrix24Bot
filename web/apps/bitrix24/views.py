@@ -11,7 +11,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 
 from web.services.telegram import telegram_service
-
+from web.login_bot import user_bot
 
 @csrf_exempt
 def bitrix_webhook(request):
@@ -61,7 +61,6 @@ def bitrix_webhook(request):
         telegram_username=telegram_username
     )
 
-    user_bot = Client(**settings.USERBOT_DATA)
     user_bot.start()
     user_bot.send_message(
         chat_id=telegram_username,
