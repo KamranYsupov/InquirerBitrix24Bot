@@ -1,4 +1,5 @@
 import os
+from copy import copy
 
 import django
 import loguru
@@ -12,6 +13,9 @@ load_dotenv()
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'web.core.settings')
 
 django.setup()
+
+USERBOT_DATA = copy(settings.USERBOT_DATA)
+USERBOT_DATA.pop('workdir')
 
 user_bot = Client(**settings.USERBOT_DATA)
 
