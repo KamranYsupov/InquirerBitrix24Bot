@@ -3,6 +3,7 @@ from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
+from pyrogram.enums import ParseMode
 
 load_dotenv()
 
@@ -118,6 +119,15 @@ TELEGRAM_API_ID = os.getenv('TELEGRAM_API_ID')
 TELEGRAM_API_HASH = os.getenv('TELEGRAM_API_HASH')
 USERBOT_PHONE = os.getenv('USERBOT_PHONE')
 USERBOT_LOGIN = os.getenv('USERBOT_LOGIN')
+USERBOT_DATA = {
+    'name': USERBOT_LOGIN,
+    'api_id': TELEGRAM_API_ID,
+    'api_hash': TELEGRAM_API_HASH,
+    'phone_number': USERBOT_PHONE,
+    'parse_mode': ParseMode.HTML,
+    'workdir': str(BASE_DIR),
+}
+
 
 MANAGERS_GROUP_ID = int(os.getenv('MANAGERS_GROUP_ID'))
 

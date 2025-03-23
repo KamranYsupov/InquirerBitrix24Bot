@@ -1,4 +1,7 @@
+import asyncio
+
 import bcrypt
+from pyrogram import Client
 
 from web.apps.bitrix24.models import Deal
 from web.services.bitrix24 import bitrix24_api_service
@@ -7,7 +10,6 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 
-from web.bot import user_bot
 from web.services.telegram import telegram_service
 
 
@@ -59,16 +61,18 @@ def bitrix_webhook(request):
         telegram_username=telegram_username
     )
 
-    user_bot.start()
-    user_bot.send_message(
-        chat_id=telegram_username,
-        text='👋 Здравствуйте! Вчера мы отправили вам коммерческое предложение. '
-             'Нам очень важно узнать ваше мнение!\n\n'
-             '📊 Оцените его по шкале от 0 до 5, где\n'
-             '0 - Совсем не понравилось\n'
-             '5 - Всё отлично\n\n'
-             'Просто отправьте цифру в ответ на это сообщение.',
-    )
-    user_bot.stop()
+    async def send_userbot_message_with_context():
+        async with Client(**settings.USERBOT_DATA) as client:
+            await client.send_message(
+                chat_id=telegram_username,
+                text='👋 Здравствуйте! Вчера мы отправили вам коммерческое предложение. '
+                     'Нам очень важно узнать ваше мнение!\n\n'
+                     '📊 Оцените его по шкале от 0 до 5, где\n'
+                     '0 - Совсем не понравилось\n'
+                     '5 - Всё отлично\n\n'
+                     'Просто отправьте цифру в ответ на это сообщение.',
+            )
+
+    asyncio.run(send_userbot_message_with_context())
 
     return HttpResponse(status=200)

@@ -13,13 +13,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'web.core.settings')
 
 django.setup()
 
-user_bot = Client(
-    name=settings.USERBOT_LOGIN,
-    api_id=settings.TELEGRAM_API_ID,
-    api_hash=settings.TELEGRAM_API_HASH,
-    phone_number=settings.USERBOT_PHONE,
-    parse_mode=ParseMode.HTML,
-)
+user_bot = Client(**settings.USERBOT_DATA)
 
 from web.services.telegram import telegram_service
 from web.apps.bitrix24.models import Deal
