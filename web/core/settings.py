@@ -3,6 +3,7 @@ from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
+from pyrogram.enums import ParseMode
 
 load_dotenv()
 
@@ -106,6 +107,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = ['https://kamran.loca.lt']
 
+REDIS_HOST = os.getenv('REDIS_HOST', 'redis')
+REDIS_PORT = os.getenv('REDIS_PORT', 6379)
+REDIS_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
+
+CELERY_BROKER_URL = f'{REDIS_URL}/0'
+CELERY_RESULT_BACKEND = f'{REDIS_URL}/1'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
 BITRIX24_WEBHOOK_APPLICATION_TOKEN = os.getenv('BITRIX24_WEBHOOK_APPLICATION_TOKEN')
 BITRIX24_API_URL = os.getenv('BITRIX24_API_URL')
 BITRIX24_TELEGRAM_USERNAME_FIELD_NAME = os.getenv('BITRIX24_TELEGRAM_USERNAME_FIELD_NAME')
@@ -119,6 +131,18 @@ TELEGRAM_API_HASH = os.getenv('TELEGRAM_API_HASH')
 USERBOT_PHONE = os.getenv('USERBOT_PHONE')
 USERBOT_LOGIN = os.getenv('USERBOT_LOGIN')
 
+USERBOT_DATA = {
+    'name': USERBOT_LOGIN,
+    'api_id': TELEGRAM_API_ID,
+    'api_hash': TELEGRAM_API_HASH,
+    'phone_number': USERBOT_PHONE,
+    'parse_mode': ParseMode.HTML,
+    'workdir': str(BASE_DIR),
+}
+
+REQUEST_DEAL_REVIEW_MINUTES_INTERVAL = int(os.getenv('REQUEST_DEAL_REVIEW_MINUTES_INTERVAL', 2))
 MANAGERS_GROUP_ID = int(os.getenv('MANAGERS_GROUP_ID'))
 
 TELEGRAM_API_URL = 'https://api.telegram.org'
+
+AUTO_CLEAN_TASKS_SCHEDULE_SECONDS = float(3600 * 12 * 7) # Неделя в секундах

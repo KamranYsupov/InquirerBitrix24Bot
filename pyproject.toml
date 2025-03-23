@@ -20,6 +20,10 @@ requests = "^2.32.3"
 bcrypt = "^4.3.0"
 uvicorn = "^0.34.0"
 tgcrypto = "^1.2.5"
+celery = "^5.4.0"
+gevent = "^24.11.1"
+flower = "^2.0.1"
+redis = "^5.2.1"
 
 
 [build-system]
