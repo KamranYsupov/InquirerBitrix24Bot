@@ -18,11 +18,9 @@ class Deal(models.Model):
     )
 
     telegram_username = models.CharField(max_length=150)
-    user_review = models.PositiveIntegerField(
-        'Оценка пользователя',
-        validators=[
-            MaxValueValidator(5),
-        ],
+    user_review = models.TextField(
+        'Отзыв пользователя',
+        max_length=200,
         null=True,
         default=None
     )
