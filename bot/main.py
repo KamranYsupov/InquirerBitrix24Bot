@@ -17,7 +17,7 @@ django.setup()
 USERBOT_DATA = copy(settings.USERBOT_DATA)
 USERBOT_DATA.pop('workdir')
 
-user_bot = Client(**settings.USERBOT_DATA)
+user_bot = Client(**USERBOT_DATA)
 
 from web.services.telegram import telegram_service
 from web.apps.bitrix24.models import Deal

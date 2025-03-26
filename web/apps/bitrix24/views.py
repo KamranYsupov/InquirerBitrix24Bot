@@ -47,6 +47,13 @@ def bitrix_webhook(request):
 
 
     telegram_username = deal_data.get(settings.BITRIX24_TELEGRAM_USERNAME_FIELD_NAME)
+
+    Deal.objects.create(
+        id=deal_id,
+        title=deal_data.get('TITLE'),
+        telegram_username=telegram_username
+    )
+
     if not telegram_username:
         response_text = f'По сделке <b>№{deal_id}</b> не найдено контактной информации.'
         telegram_service.send_message(
@@ -55,11 +62,6 @@ def bitrix_webhook(request):
         )
         return HttpResponse(response_text, status=400)
 
-    Deal.objects.create(
-        id=deal_id,
-        title=deal_data.get('TITLE'),
-        telegram_username=telegram_username
-    )
 
     user_bot.start()
     user_bot.send_message(
