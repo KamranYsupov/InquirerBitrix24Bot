@@ -70,7 +70,6 @@ def bitrix_webhook(request):
     except ConnectionError:
         pass
 
-    user_bot.start()
     user_bot.send_message(
         chat_id=telegram_username,
         text='👋 Здравствуйте! Вчера мы отправили вам коммерческое предложение'
