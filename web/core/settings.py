@@ -110,6 +110,7 @@ CSRF_TRUSTED_ORIGINS = ['https://kamran.loca.lt']
 BITRIX24_WEBHOOK_APPLICATION_TOKEN = os.getenv('BITRIX24_WEBHOOK_APPLICATION_TOKEN')
 BITRIX24_API_URL = os.getenv('BITRIX24_API_URL')
 BITRIX24_TELEGRAM_USERNAME_FIELD_NAME = os.getenv('BITRIX24_TELEGRAM_USERNAME_FIELD_NAME')
+BITRIX_CRM_DEAL_URL = 'https://avgrup.bitrix24.ru/crm/deal/details/{deal_id}/'
 
 # Настройки бота
 BOT_TOKEN = os.getenv('BOT_TOKEN')
