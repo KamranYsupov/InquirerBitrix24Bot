@@ -48,14 +48,14 @@ def bitrix_webhook(request):
 
     telegram_username = deal_data.get(settings.BITRIX24_TELEGRAM_USERNAME_FIELD_NAME)
 
-    Deal.objects.create(
+    deal = Deal.objects.create(
         id=deal_id,
         title=deal_data.get('TITLE'),
         telegram_username=telegram_username
     )
 
     if not telegram_username:
-        response_text = f'По сделке <b>№{deal_id}</b> не найдено контактной информации.'
+        response_text = f'По сделке <b>"{deal.title}" (№{deal.id})</b> не найдено контактной информации.'
         telegram_service.send_message(
             chat_id=settings.MANAGERS_GROUP_ID,
             text=response_text
@@ -66,7 +66,8 @@ def bitrix_webhook(request):
     user_bot.start()
     user_bot.send_message(
         chat_id=telegram_username,
-        text='👋 Здравствуйте! Вчера мы отправили вам коммерческое предложение. '
+        text='👋 Здравствуйте! Вчера мы отправили вам коммерческое предложение'
+             f'"{deal.title}" (№{deal.id}). '
              'Нам очень важно узнать ваше мнение!\n\n'
              '📊 Оцените его по шкале от 0 до 5, где\n'
              '0 - Совсем не понравилось\n'
