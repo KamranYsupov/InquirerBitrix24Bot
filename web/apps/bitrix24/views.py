@@ -65,6 +65,10 @@ def bitrix_webhook(request):
         )
         return HttpResponse(response_text, status=400)
 
+    try:
+        user_bot.start()
+    except ConnectionError:
+        pass
 
     user_bot.start()
     user_bot.send_message(
