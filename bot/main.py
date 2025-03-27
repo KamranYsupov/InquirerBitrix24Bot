@@ -44,7 +44,11 @@ def handel_deal(client: Client, message: types.Message):
 
     telegram_service.send_message(
         chat_id=settings.MANAGERS_GROUP_ID,
-        text=f'Отзыв по сделке <b>"{deal.title}" (№{deal.id})</b>: {deal.user_review}',
+        text=(
+            f'Отзыв по сделке '
+            f'<a href="{settings.BITRIX_CRM_DEAL_URL.format(deal.id)}">'
+            f'<b>"{deal.title}" (№{deal.id})</b></a>: {deal.user_review}'
+        ),
     )
 
 

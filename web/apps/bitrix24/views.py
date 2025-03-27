@@ -55,7 +55,10 @@ def bitrix_webhook(request):
     )
 
     if not telegram_username:
-        response_text = f'По сделке <b>"{deal.title}" (№{deal.id})</b> не найдено контактной информации.'
+        response_text = (
+            f'По сделке <a href="{settings.BITRIX_CRM_DEAL_URL.format(deal.id)}">'
+            f'<b>"{deal.title}" (№{deal.id})</b></a>: не найдено контактной информации.'
+        )
         telegram_service.send_message(
             chat_id=settings.MANAGERS_GROUP_ID,
             text=response_text
