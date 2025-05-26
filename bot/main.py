@@ -28,9 +28,9 @@ def handel_deal(client: Client, message: types.Message):
     if not deal.exists():
         return
 
-    deal = deal.first()
+    deal = deal.last()
 
-    if deal.user_review is not None:
+    if deal.user_review is not None or not deal.is_active:
         return
 
     if len(message.text) > 200:
