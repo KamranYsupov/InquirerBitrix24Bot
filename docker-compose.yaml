@@ -26,8 +26,12 @@ x-celery: &base_celery
     context: .
     dockerfile: web.dockerfile
   entrypoint: celery
+  links:
+    - redis
+    - rabbitmq
   depends_on:
     - redis
+    - rabbitmq
   restart: always
   networks:
     - internal
@@ -82,6 +86,20 @@ services:
     container_name: ${PROJECT_NAME}_bot
     command: python bot/main.py
 
+  rabbitmq:
+    image: rabbitmq:management
+    hostname: rabbitmq
+    container_name: ${PROJECT_NAME}_rabbitmq
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "${RABBITMQ_PORT}:${RABBITMQ_PORT}"
+    networks:
+      - internal
+    env_file:
+      - .env
+    restart: always
+
   redis:
     image: redis:7.0.11-alpine
     hostname: redis
@@ -115,6 +133,7 @@ volumes:
   pg_data:
   poetry-volume:
   redis_data:
+  rabbitmq_data:
 
 networks:
   internal:
