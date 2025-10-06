@@ -100,6 +100,7 @@ def bitrix_webhook(request):
             name='request_deal_review_task'
         )
     )
+    last_tomorrow_task_eta = None
     request_deal_review_task_eta = (
         get_tomorrow_noon() if not last_tomorrow_task_eta
         else last_tomorrow_task_eta + timedelta(

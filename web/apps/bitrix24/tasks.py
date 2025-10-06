@@ -1,6 +1,7 @@
 import asyncio
 from datetime import timedelta
 
+import loguru
 from celery import shared_task
 from django.conf import settings
 from django.utils import timezone
@@ -28,7 +29,8 @@ def send_message_task(
 
     async def send_userbot_message_with_context():
         async with Client(**settings.USERBOT_DATA) as client:
-            await client.send_message(**kwargs)
+            message = await client.send_message(**kwargs)
+            loguru.logger.info(str(message.from_user.phone_number))
 
     asyncio.run(send_userbot_message_with_context())
 
