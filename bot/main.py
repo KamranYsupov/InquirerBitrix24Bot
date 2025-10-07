@@ -24,7 +24,10 @@ from web.apps.bitrix24.models import Deal
 
 @user_bot.on_message()
 def handel_deal(client: Client, message: types.Message):
-    deal = Deal.objects.filter(telegram_username=message.from_user.username)
+    deal = Deal.objects.filter(
+        telegram_username=f'+{message.from_user.phone_number}'
+    )
+
     if not deal.exists():
         return
 

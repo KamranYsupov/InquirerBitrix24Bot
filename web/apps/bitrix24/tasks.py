@@ -6,6 +6,7 @@ from celery import shared_task
 from django.conf import settings
 from django.utils import timezone
 from pyrogram import Client
+from pyrogram.types import InputPhoneContact
 
 from web.apps.bitrix24.models import Deal, ScheduledTask
 from web.apps.bitrix24.utils import get_tomorrow_noon
@@ -29,8 +30,15 @@ def send_message_task(
 
     async def send_userbot_message_with_context():
         async with Client(**settings.USERBOT_DATA) as client:
-            message = await client.send_message(**kwargs)
-            loguru.logger.info(str(message.from_user.phone_number))
+            contact = await client.import_contacts(
+                [InputPhoneContact(chat_id, 'BusinessClient', '')]
+            )
+            user_id = contact.users[0].id
+
+            await client.send_message(
+                chat_id=user_id,
+                text=text,
+            )
 
     asyncio.run(send_userbot_message_with_context())
 
