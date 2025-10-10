@@ -10,7 +10,6 @@ def get_tomorrow_noon():
     local_tz = timezone.get_current_timezone()
     now_utc = timezone.now()
     now_local = now_utc.astimezone(local_tz)
-    return  now_local + timedelta(seconds=2)
     noon_local = now_local.replace(hour=12, minute=0, second=0, microsecond=0)
 
     if now_local >= noon_local:
